@@ -13,16 +13,18 @@ require dirname(__FILE__) . '/config/config.inc.php';
 // initialize by creating Context object
 $oContext = Context::getInstance();
 $oContext->init();
-$oMemberController = getController('member');
+
 $id = $_POST['user_id'];
 $pw = $_POST['password'];
 if(!$id || !$pw)
 {
     die('ERR : ID or PW Missing');
 }
+
+$oMemberController = getController('member');
 $output = $oMemberController->doLogin($id,$pw,false);
 if(!$output->toBool())
 {
-    die('Login failed');
+    die('Login failed - ' . $output->getMessage());
 }
 echo('Login success');
